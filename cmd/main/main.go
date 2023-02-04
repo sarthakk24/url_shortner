@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"urlShortner/pkg/routes"
+)
 
 func main() {
+	routes.AllRoutes()
 	fmt.Println("working")
 }
