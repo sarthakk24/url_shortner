@@ -1,7 +1,8 @@
 package routes
 
 import (
-	test "urlShortner/pkg/api/controllers"
+	"urlShortner/pkg/api/controllers/authentication"
+	test "urlShortner/pkg/api/controllers/test"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,5 +10,6 @@ import (
 func AllRoutes() {
 	router := gin.Default()
 	router.GET("/test" , test.Test)
+	router.POST("/signup" , authentication.SignUp)
 	router.Run("localhost:8080")
 }
