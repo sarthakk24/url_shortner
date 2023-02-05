@@ -7,13 +7,13 @@ import (
 )
 
 type User struct {
-	UserID   string `json:"userId"`
-	Username string `json:"username" binding:"required"`
-	Name     string `json:"name" binding:"required"`
-	Email    string `json:"email" binding:"required,email"`
-	Password string `json:"password" binding:"required"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
+	UserID   string `json:"userId" bson:"userId"`
+	Username string `json:"username" binding:"required" bson:"username"`
+	Name     string `json:"name" binding:"required" bson:"name"`
+	Email    string `json:"email" binding:"required,email" bson:"email"`
+	Password string `json:"password" binding:"required" bson:"password"`
+	CreatedAt time.Time `json:"createdAt" bson:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt" bson:"updatedAt"`
 }
 
 func (user *User) InitUser() User{

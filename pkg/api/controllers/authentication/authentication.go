@@ -1,16 +1,23 @@
 package authentication
 
 import (
+	"context"
+	"fmt"
 	"net/http"
+	"urlShortner/pkg/database"
 	errorHandler "urlShortner/pkg/errors"
 	"urlShortner/pkg/models/user"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	log "github.com/sirupsen/logrus"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 var validate *validator.Validate
+
+type doc struct {
+	name string
+}
 
 func SignUp(c *gin.Context) {
 	validate = validator.New()
@@ -18,22 +25,17 @@ func SignUp(c *gin.Context) {
 	var newUser user.User
 	err := c.ShouldBind(&newUser)
 
-	// if err != nil {
-	// 	c.IndentedJSON(http.StatusOK , err)
-	// 	return
-	// }
-		
-	// ValidationErr := validate.Struct(newUser)
-
 	if err != nil {
-		log.Errorln(errorHandler.Handler(err , c))
-		// c.IndentedJSON(http.StatusOK , gin.H{"error" :errorHandler.Handler(err)})
+		errorHandler.Handler(err, c)
 		return
 	}
 
 	newUser.InitUser()
-	// log.Info(newUser)
 
-	c.IndentedJSON(http.StatusOK , "signUp")
+	var userCollection mongo.Collection = database.GetCollection("urlShortner", "users")
+	result, err := userCollection.InsertOne(context.TODO(), newUser)
+	fmt.Println(result)
+
+	c.IndentedJSON(http.StatusOK, "signUp")
 	return
 }

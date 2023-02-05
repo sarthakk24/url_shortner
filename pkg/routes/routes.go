@@ -9,7 +9,7 @@ import (
 
 func AllRoutes() {
 	router := gin.Default()
-	router.GET("/test" , test.Test)
+	router.GET("/test" , test.TestMongo)
 	router.POST("/signup" , authentication.SignUp)
 	router.Run("localhost:8080")
 }
