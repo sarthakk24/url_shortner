@@ -26,8 +26,8 @@ func SignUp(c *gin.Context) {
 	// ValidationErr := validate.Struct(newUser)
 
 	if err != nil {
-		log.Errorln(errorHandler.Handler(err))
-		c.IndentedJSON(http.StatusOK , gin.H{"error" :errorHandler.Handler(err)})
+		log.Errorln(errorHandler.Handler(err , c))
+		// c.IndentedJSON(http.StatusOK , gin.H{"error" :errorHandler.Handler(err)})
 		return
 	}
 
