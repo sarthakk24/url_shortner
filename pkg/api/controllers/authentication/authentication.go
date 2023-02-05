@@ -1,25 +1,39 @@
 package authentication
 
 import (
-	"fmt"
 	"net/http"
+	errorHandler "urlShortner/pkg/errors"
 	"urlShortner/pkg/models/user"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
+	log "github.com/sirupsen/logrus"
 )
 
-func SignUp(c *gin.Context) {
-	var newUser user.User
+var validate *validator.Validate
 
-	err := c.BindJSON(&newUser)
+func SignUp(c *gin.Context) {
+	validate = validator.New()
+
+	var newUser user.User
+	err := c.ShouldBind(&newUser)
+
+	// if err != nil {
+	// 	c.IndentedJSON(http.StatusOK , err)
+	// 	return
+	// }
+		
+	// ValidationErr := validate.Struct(newUser)
 
 	if err != nil {
-		c.IndentedJSON(http.StatusOK , err)
+		log.Errorln(errorHandler.Handler(err))
+		c.IndentedJSON(http.StatusOK , gin.H{"error" :errorHandler.Handler(err)})
 		return
 	}
 
 	newUser.InitUser()
-	fmt.Println(newUser)
+	// log.Info(newUser)
 
 	c.IndentedJSON(http.StatusOK , "signUp")
+	return
 }
