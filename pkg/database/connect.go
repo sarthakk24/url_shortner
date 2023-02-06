@@ -16,7 +16,6 @@ var client mongo.Client
 func Connect() mongo.Client {
 
 	var uri string = viper.GetString("MONGO_URI")
-	fmt.Println(uri)
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))
 
 	if err != nil {

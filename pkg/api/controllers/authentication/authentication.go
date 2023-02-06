@@ -36,6 +36,6 @@ func SignUp(c *gin.Context) {
 	result, err := userCollection.InsertOne(context.TODO(), newUser)
 	fmt.Println(result)
 
-	c.IndentedJSON(http.StatusOK, "signUp")
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "New user was registered :)", "mongoId": result})
 	return
 }
