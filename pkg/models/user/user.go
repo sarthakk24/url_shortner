@@ -15,6 +15,7 @@ type User struct {
 	Password  string `json:"password" binding:"required" bson:"password"`
 	CreatedAt int64  `json:"createdAt" bson:"createdAt"`
 	UpdatedAt int64  `json:"updatedAt" bson:"updatedAt"`
+	LastLogin int64  `json:"lastLogin" bson:"lastLogin"`
 }
 
 func (user *User) InitUser() User {
@@ -22,6 +23,12 @@ func (user *User) InitUser() User {
 	user.UserID = uuid.NewString()
 	user.CreatedAt = time.Now().Unix()
 	user.UpdatedAt = time.Now().Unix()
+	user.LastLogin = time.Now().Unix()
 
 	return *user
+}
+
+type Login struct {
+	Email    string `json:"email" binding:"required,email" bson:"email"`
+	Password string `json:"password" binding:"required" bson:"password"`
 }

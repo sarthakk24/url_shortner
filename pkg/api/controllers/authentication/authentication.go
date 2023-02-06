@@ -21,7 +21,6 @@ type doc struct {
 
 func SignUp(c *gin.Context) {
 	validate = validator.New()
-
 	var newUser user.User
 	err := c.ShouldBind(&newUser)
 
@@ -38,4 +37,26 @@ func SignUp(c *gin.Context) {
 
 	c.IndentedJSON(http.StatusOK, gin.H{"message": "New user was registered :)", "mongoId": result})
 	return
+}
+
+func SignIn(c *gin.Context) {
+	// validate = validator.New()
+
+	// var user user.User
+	// var details user.Login
+
+	// err := c.ShouldBind(&details)
+
+	// if err != nil {
+	// 	errorHandler.Handler(err, c)
+	// 	return
+	// }
+
+	// var userCollection mongo.Collection = database.GetCollection("urlShortner", "users")
+
+	// var foundUser user.User:= userCollection.FindOne()
+
+	// hashing.ComparePassword()
+
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "hello sign up initiated "})
 }
